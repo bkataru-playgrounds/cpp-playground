@@ -19,7 +19,7 @@ std::string decimalToBinary(unsigned int decimal)
 
 std::string padOctet(std::string octetString)
 {
-    while (octetString.length() < 8) octetString = '0' + octetString;
+    while (octetString.length() < 8) octetString = "0" + octetString;
 
     return octetString;
 }
@@ -41,10 +41,9 @@ std::string IPToBinary(std::string ipAddress)
     std::string binaryString;
     size_t ptr = 0;
 
-    ipAddress += '.'; // TODO: this is a hack, write a more general solution taking into account the end of the string
-    for(size_t i = 0; i < ipAddress.length(); i++)
+    for(size_t i = 0; i <= ipAddress.length(); i++)
     {
-        if (ipAddress[i] == '.')
+        if (i == ipAddress.length() || ipAddress[i] == '.')
         {
             unsigned int octet = std::stoi(ipAddress.substr(ptr, i - ptr));
 
@@ -63,10 +62,8 @@ std::string binaryToIP(std::string binaryString)
 
     for(int i = 0; i < 4; i++)
     {
-        ipAddress += std::to_string(binaryToDecimal(binaryString.substr(i * 8, 8))) + '.';
+        ipAddress += std::to_string(binaryToDecimal(binaryString.substr(i * 8, 8))) + (i < 3 ? "." : "");
     }
-
-    ipAddress.pop_back(); // TODO: this is a hack, write a more general solution taking into account the end of the string
 
     return ipAddress;
 }
